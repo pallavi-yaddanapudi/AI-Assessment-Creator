@@ -85,7 +85,7 @@ export default function GenerateProgress() {
         socket.emit('join-assignment', assignmentId);
       });
 
-      socket.on('progress', (data: { progress: number; status: string; message: string; paperId?: string }) => {
+      socket.on('progress', (data: { progress: number; status: 'pending' | 'processing' | 'completed' | 'failed'; message: string; paperId?: string }) => {
         dispatch(setGenerationProgress(data));
 
         let type: 'info' | 'completed' | 'failed' = 'info';
