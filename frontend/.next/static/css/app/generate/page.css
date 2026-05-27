@@ -1,0 +1,160 @@
+/*!**************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/styles/generate.module.css ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************/
+.generate_container___vCgj {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  background-color: var(--bg-main);
+  text-align: center;
+}
+
+.generate_card__jWXuC {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 580px;
+  -webkit-backdrop-filter: blur(12px);
+          backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.generate_title__tmw0a {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.generate_subtitle__SeG8n {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* Glowing Circular Progress Ring */
+.generate_progressRingContainer__JU2H8 {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.generate_circleSvg__AjJ88 {
+  transform: rotate(-90deg);
+}
+
+.generate_circleBg__cWr1V {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.05);
+}
+
+.generate_circleBar__wGa7H {
+  fill: none;
+  stroke: var(--primary);
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--transition-normal);
+  filter: drop-shadow(0 0 8px var(--primary-glow));
+}
+
+.generate_circleBarCompleted___WnEf {
+  stroke: var(--secondary);
+  filter: drop-shadow(0 0 10px var(--secondary-glow));
+}
+
+.generate_circleBarFailed__iLHPU {
+  stroke: var(--status-failed);
+  filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.5));
+}
+
+.generate_innerPercentage__EZYf_ {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.generate_percentText__tPYmS {
+  font-family: var(--font-family-heading);
+  font-size: 38px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.generate_statusIcon__o_UN4 {
+  margin-top: 4px;
+}
+
+/* Scrolling log terminal */
+.generate_terminal__4I2IJ {
+  width: 100%;
+  background-color: #050811;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 16px;
+  text-align: left;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  height: 140px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.generate_logLine__9BG_8 {
+  color: #38bdf8;
+  white-space: pre-wrap;
+  display: flex;
+  gap: 8px;
+}
+
+.generate_logTime__KqbZX {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.generate_logMessage__z4qzi {
+  color: #e2e8f0;
+}
+
+.generate_logLineCompleted__fgh1C .generate_logMessage__z4qzi {
+  color: var(--secondary);
+}
+
+.generate_logLineFailed__0G0oU .generate_logMessage__z4qzi {
+  color: var(--status-failed);
+}
+
+.generate_cancelBtn__CyBZC {
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 13.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.generate_cancelBtn__CyBZC:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+}
+
