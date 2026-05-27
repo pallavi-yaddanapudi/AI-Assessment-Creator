@@ -6,14 +6,17 @@ import { Assignment, QuestionPaper } from '../models/Assignment';
 import { AIService } from '../services/ai.service';
 import { emitProgress } from '../sockets/socket';
 
+const redisUrl = process.env.REDIS_URL;
 const redisHost = process.env.REDIS_HOST || '127.0.0.1';
 const redisPort = parseInt(process.env.REDIS_PORT || '6379', 10);
 
-const connection = new IORedis({
-  host: redisHost,
-  port: redisPort,
-  maxRetriesPerRequest: null // Required by BullMQ
-});
+const connection = redisUrl
+  ? new IORedis(redisUrl, { maxRetriesPerRequest: null })
+  : new IORedis({
+      host: redisHost,
+      port: redisPort,
+      maxRetriesPerRequest: null // Required by BullMQ
+    });
 
 // Initialize AI Service
 const aiService = new AIService();
