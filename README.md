@@ -1,10 +1,27 @@
-# VedaAI - AI Assessment Creator
+# AI Assessment Creator
 
-VedaAI is a full-stack academic web application designed to help teachers generate structured, high-quality examination question papers from a simple configuration form, additional instructions, or source reference files (PDF/TXT) using AI.
+AI Assessment Creator is a full-stack AI-powered academic platform that enables teachers to generate structured, high-quality examination question papers from simple configuration forms, additional instructions, or uploaded reference documents (PDF/TXT).
+
+The system leverages AI generation, background job queues, real-time websocket progress tracking, and editable print-ready paper rendering to streamline the assessment creation process.
 
 ---
 
-## 🏗️ Architecture & Flow Overview
+# 🚀 Features
+
+- AI-powered question paper generation using Gemini AI
+- Upload PDF/TXT reference materials
+- Real-time generation progress using WebSockets
+- Background processing with BullMQ + Redis
+- Editable generated assessment interface
+- Print-ready PDF export
+- Redux-powered frontend state management
+- Modern responsive UI with Next.js
+- Structured JSON schema-based AI prompting
+- Queue-based scalable architecture
+
+---
+
+# 🏗️ System Architecture
 
 ```mermaid
 sequenceDiagram
@@ -19,111 +36,259 @@ sequenceDiagram
     Frontend->>Express: 1. POST /api/assignments (FormData + Reference File)
     Express->>MongoDB: 2. Save Assignment (Status: pending, Progress: 0%)
     Express->>Redis: 3. Push job to BullMQ
-    Express-->>Frontend: 4. Return Created Assignment Object
+    Express-->>Frontend: 4. Return Assignment Object
     Frontend->>Express: 5. Connect WebSocket (Socket.io)
-    
+
     Worker->>Redis: 6. Pull generation job from queue
-    Worker->>MongoDB: 7. Update status: processing (Progress: 10%)
-    Worker->>Express: 8. Broadcast websocket progress to Frontend (e.g. 30%, 55%)
-    Worker->>Gemini: 9. Request structured AI generation (JSON Schema)
-    Gemini-->>Worker: 10. Return structured questions JSON
-    Worker->>MongoDB: 11. Create & save QuestionPaper
-    Worker->>MongoDB: 12. Update Assignment status: completed (Progress: 100%)
-    Worker->>Express: 13. Broadcast finished socket event with paper ID
-    Frontend->>Express: 14. Redirect & GET /api/assignments/:id/paper
-    Express-->>Frontend: 15. Render formatted interactive paper
+    Worker->>MongoDB: 7. Update status: processing
+    Worker->>Express: 8. Broadcast progress updates
+    Worker->>Gemini: 9. Request AI generation
+    Gemini-->>Worker: 10. Return structured JSON
+    Worker->>MongoDB: 11. Save QuestionPaper
+    Worker->>MongoDB: 12. Mark Assignment completed
+    Worker->>Express: 13. Emit completed event
+    Frontend->>Express: 14. Fetch generated paper
+    Express-->>Frontend: 15. Render editable assessment
 ```
 
 ---
 
-## 🛠️ Technology Stack
+# 🛠️ Tech Stack
 
-### **Backend:**
-- **Runtime:** Node.js (v18+) with TypeScript
-- **Framework:** Express.js
-- **Database:** MongoDB (via Mongoose)
-- **Message Broker:** Redis (via ioredis)
-- **Background Jobs:** BullMQ
-- **Real-Time Communication:** Socket.io
-- **PDF Generation:** PDFKit
+## Frontend
+- Next.js 14 (App Router)
+- TypeScript
+- Redux Toolkit
+- Socket.io Client
+- CSS Modules
+- Lucide React
 
-### **Frontend:**
-- **Framework:** Next.js (App Router, v14) with TypeScript
-- **State Management:** Redux Toolkit (RTK)
-- **Websockets:** Socket.io-client
-- **Styling:** Vanilla CSS (CSS Modules)
-- **Icons:** Lucide React
-
----
-
-## ⚙️ Setup & Installation Instructions
-
-This project is separated into a `backend/` and `frontend/` folder.
-
-### **Prerequisites:**
-Before running, ensure you have the following installed on your machine:
-1. **Node.js** (v18 or higher) & **npm**
-2. **MongoDB** (running locally on port `27017` or an Atlas URI)
-3. **Redis** (running locally on port `6379`)
+## Backend
+- Node.js
+- Express.js
+- TypeScript
+- MongoDB + Mongoose
+- Redis + ioredis
+- BullMQ
+- Socket.io
+- PDFKit
 
 ---
 
-### **1. Backend Service Configuration**
+# 📂 Project Structure
 
-1. Open a terminal and navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-2. Install the backend dependencies:
-   ```bash
-   npm install
-   ```
-3. Create your `.env` file from the example:
-   ```bash
-   cp .env.example .env
-   ```
-4. Edit the `.env` file with your credentials:
-   - **`MONGODB_URI`**: Set your MongoDB connection URI (e.g., `mongodb://localhost:27017/veda-ai`)
-   - **`GEMINI_API_KEY`**: Paste your Google Gemini AI API key.
-   - **`USE_MOCK_AI`**: If set to `true`, the backend bypasses Gemini calls and uses a highly structured topic-based mock generator (useful for testing without API keys).
-5. Start the backend developer server:
-   ```bash
-   npm run dev
-   ```
-
----
-
-### **2. Frontend Service Configuration**
-
-1. Open a new terminal and navigate to the frontend directory:
-   ```bash
-   cd ../frontend
-   ```
-2. Install the frontend dependencies:
-   ```bash
-   npm install
-   ```
-3. Create your `.env` file from the example:
-   ```bash
-   cp .env.example .env.local
-   ```
-4. Set the environment API endpoints (defaults match backend server on port 5000):
-   ```
-   NEXT_PUBLIC_API_URL=http://localhost:5000
-   NEXT_PUBLIC_SOCKET_URL=http://localhost:5000
-   ```
-5. Start the frontend developer server:
-   ```bash
-   npm run dev
-   ```
-6. Open your browser and navigate to `http://localhost:3000`.
+```bash
+AI-Assessment-Creator/
+│
+├── backend/
+│   ├── src/
+│   ├── uploads/
+│   ├── workers/
+│   ├── routes/
+│   ├── controllers/
+│   ├── models/
+│   └── services/
+│
+├── frontend/
+│   ├── app/
+│   ├── components/
+│   ├── store/
+│   ├── styles/
+│   └── public/
+│
+└── README.md
+```
 
 ---
 
-## 💡 Key Design Decisions & Approach
+# ⚙️ Local Setup Instructions
 
-1. **BullMQ Background Processing:** Assessment creation involves file parsing and LLM prompts which can take up to 10 seconds. By offloading these tasks to BullMQ, the server remains responsive, and the frontend communicates progress in real-time.
-2. **Redux State Management:** All states (assignment parameters, real-time log queues, and loaded question papers) are managed via Redux slices, separating UI layout code from logic.
-3. **Structured Prompt JSON Schemas:** We utilize Gemini's strict schema JSON mode. This prevents the LLM from outputting unstructured markdown or text notes, guaranteeing that the questions, options, difficulty tags, and marks parse successfully.
-4. **Editable Output Paper:** The output page renders like a physical print-ready exam sheet, but teachers can click inline text to modify questions or instructions. Unsaved edits trigger alert changes, saving straight back to the database.
-5. **Print-Perfect PDF Kit Generation:** Rather than letting the user print HTML (which is prone to pagination and layout breakages), the backend builds an A4 layout using `pdfkit` complete with institutional margins, dotted student info lines, and page numbers.
+## Prerequisites
+
+Install the following before starting:
+
+- Node.js v18+
+- MongoDB
+- Redis
+- npm
+
+---
+
+# 🔧 Backend Setup
+
+## Step 1: Navigate to backend
+
+```bash
+cd backend
+```
+
+## Step 2: Install dependencies
+
+```bash
+npm install
+```
+
+## Step 3: Create .env file
+
+Create a `.env` file inside `backend/`
+
+```env
+PORT=5000
+
+MONGODB_URI=your_mongodb_connection_uri
+
+REDIS_URL=redis://127.0.0.1:6379
+
+GEMINI_API_KEY=your_gemini_api_key
+
+USE_MOCK_AI=false
+```
+
+## Step 4: Start backend server
+
+```bash
+npm run dev
+```
+
+Backend runs on:
+
+```bash
+http://localhost:5000
+```
+
+---
+
+# 🎨 Frontend Setup
+
+## Step 1: Navigate to frontend
+
+```bash
+cd frontend
+```
+
+## Step 2: Install dependencies
+
+```bash
+npm install
+```
+
+## Step 3: Create .env.local
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5000
+
+NEXT_PUBLIC_SOCKET_URL=http://localhost:5000
+```
+
+## Step 4: Start frontend
+
+```bash
+npm run dev
+```
+
+Frontend runs on:
+
+```bash
+http://localhost:3000
+```
+
+---
+
+# ☁️ Deployment
+
+## Frontend Deployment (Vercel)
+
+Deploy frontend using:
+
+### Root Directory
+```bash
+frontend
+```
+
+### Build Command
+```bash
+npm run build
+```
+
+### Install Command
+```bash
+npm install
+```
+
+---
+
+## Backend Deployment (Render)
+
+Deploy backend using:
+
+### Root Directory
+```bash
+backend
+```
+
+### Build Command
+```bash
+npm install && npm run build
+```
+
+### Start Command
+```bash
+npm start
+```
+
+---
+
+# 🔑 Environment Variables
+
+## Backend
+
+```env
+PORT=5000
+MONGODB_URI=
+REDIS_URL=
+GEMINI_API_KEY=
+USE_MOCK_AI=false
+```
+
+## Frontend
+
+```env
+NEXT_PUBLIC_API_URL=
+NEXT_PUBLIC_SOCKET_URL=
+```
+
+---
+
+# 💡 Key Design Decisions
+
+## 1. BullMQ Background Processing
+
+AI generation and file parsing are long-running operations. BullMQ keeps the API responsive while workers process jobs asynchronously.
+
+## 2. Real-Time Progress Tracking
+
+Socket.io streams live progress updates from backend workers to the frontend UI.
+
+## 3. Structured AI Generation
+
+Gemini AI uses strict JSON schema prompting to ensure predictable and parseable outputs.
+
+## 4. Editable Question Papers
+
+Generated papers remain editable after generation for teachers to customize content before exporting.
+
+## 5. Print-Perfect PDF Export
+
+PDFKit generates properly paginated A4-format exam sheets with professional formatting.
+
+---
+
+# 🔮 Future Improvements
+
+- Authentication & Role-Based Access
+- AI Difficulty Balancing
+- Multi-language Question Generation
+- Analytics Dashboard
+- Cloud File Storage
+- Collaborative Editing
+- Question Bank Management
