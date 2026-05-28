@@ -62,10 +62,25 @@ const createAssignment = async (req, res) => {
             fileName
         });
         await assignment.save();
-        // --- Queue BullMQ Job ---
-        await queue_1.assessmentQueue.add('generate-assessment', {
-            assignmentId: assignment._id.toString()
-        });
+        // --- Queue BullMQ Job or fallback to in-process async generation ---
+        const assignmentIdStr = assignment._id.toString();
+        if ((0, queue_1.isRedisConnected)()) {
+            console.log('Redis is connected. Queueing job with BullMQ.');
+            await queue_1.assessmentQueue.add('generate-assessment', {
+                assignmentId: assignmentIdStr
+            });
+        }
+        else {
+            console.log('Redis is offline/missing. Falling back to in-process async generation.');
+            setImmediate(async () => {
+                try {
+                    await (0, queue_1.processAssignment)(assignmentIdStr);
+                }
+                catch (err) {
+                    console.error('Fallback in-process generation failed:', err);
+                }
+            });
+        }
         return res.status(201).json(assignment);
     }
     catch (error) {
@@ -148,10 +163,25 @@ const regenerateQuestionPaper = async (req, res) => {
         await assignment.save();
         // Delete old question paper if exists
         await Assignment_1.QuestionPaper.deleteOne({ assignmentId: assignment._id });
-        // Add back to queue
-        await queue_1.assessmentQueue.add('generate-assessment', {
-            assignmentId: assignment._id.toString()
-        });
+        // Add back to queue or fallback to in-process async generation
+        const assignmentIdStr = assignment._id.toString();
+        if ((0, queue_1.isRedisConnected)()) {
+            console.log('Redis is connected. Queueing job with BullMQ for regeneration.');
+            await queue_1.assessmentQueue.add('generate-assessment', {
+                assignmentId: assignmentIdStr
+            });
+        }
+        else {
+            console.log('Redis is offline/missing. Falling back to in-process async regeneration.');
+            setImmediate(async () => {
+                try {
+                    await (0, queue_1.processAssignment)(assignmentIdStr);
+                }
+                catch (err) {
+                    console.error('Fallback in-process regeneration failed:', err);
+                }
+            });
+        }
         return res.status(200).json(assignment);
     }
     catch (error) {
