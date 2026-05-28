@@ -8,7 +8,6 @@ import { createServer } from 'http';
 import path from 'path';
 import { connectDB } from './config/db';
 import { initSocket } from './sockets/socket';
-import { initWorker } from './queues/queue';
 import assignmentRoutes from './routes/assignment.routes';
 
 const app = express();
@@ -54,9 +53,7 @@ const startServer = async () => {
     initSocket(server);
     console.log('WebSocket system initialized.');
 
-    // 3. Initialize BullMQ background job worker
-    initWorker();
-    console.log('BullMQ Background generation worker started.');
+    // 3. (BullMQ background generation worker removed - now running in-process)
 
     // 4. Start HTTP Server
     server.listen(PORT, () => {

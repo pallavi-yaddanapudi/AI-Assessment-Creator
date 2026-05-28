@@ -12,7 +12,6 @@ const http_1 = require("http");
 const path_1 = __importDefault(require("path"));
 const db_1 = require("./config/db");
 const socket_1 = require("./sockets/socket");
-const queue_1 = require("./queues/queue");
 const assignment_routes_1 = __importDefault(require("./routes/assignment.routes"));
 const app = (0, express_1.default)();
 const server = (0, http_1.createServer)(app);
@@ -48,9 +47,7 @@ const startServer = async () => {
         // 2. Initialize WebSockets
         (0, socket_1.initSocket)(server);
         console.log('WebSocket system initialized.');
-        // 3. Initialize BullMQ background job worker
-        (0, queue_1.initWorker)();
-        console.log('BullMQ Background generation worker started.');
+        // 3. (BullMQ background generation worker removed - now running in-process)
         // 4. Start HTTP Server
         server.listen(PORT, () => {
             console.log(`Server is running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);

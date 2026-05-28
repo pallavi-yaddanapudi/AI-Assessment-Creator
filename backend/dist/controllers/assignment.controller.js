@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.downloadPDF = exports.regenerateQuestionPaper = exports.updateQuestionPaper = exports.getQuestionPaper = exports.getAssignmentById = exports.getAssignments = exports.createAssignment = void 0;
 const Assignment_1 = require("../models/Assignment");
-const queue_1 = require("../queues/queue");
+const generator_1 = require("../services/generator");
 const pdf_service_1 = require("../services/pdf.service");
 const createAssignment = async (req, res) => {
     try {
@@ -62,25 +62,16 @@ const createAssignment = async (req, res) => {
             fileName
         });
         await assignment.save();
-        // --- Queue BullMQ Job or fallback to in-process async generation ---
+        // --- Generate Assignment In-Process Asynchronously ---
         const assignmentIdStr = assignment._id.toString();
-        if ((0, queue_1.isRedisConnected)()) {
-            console.log('Redis is connected. Queueing job with BullMQ.');
-            await queue_1.assessmentQueue.add('generate-assessment', {
-                assignmentId: assignmentIdStr
-            });
-        }
-        else {
-            console.log('Redis is offline/missing. Falling back to in-process async generation.');
-            setImmediate(async () => {
-                try {
-                    await (0, queue_1.processAssignment)(assignmentIdStr);
-                }
-                catch (err) {
-                    console.error('Fallback in-process generation failed:', err);
-                }
-            });
-        }
+        setImmediate(async () => {
+            try {
+                await (0, generator_1.generateAssignment)(assignmentIdStr);
+            }
+            catch (err) {
+                console.error('In-process generation failed:', err);
+            }
+        });
         return res.status(201).json(assignment);
     }
     catch (error) {
@@ -163,25 +154,16 @@ const regenerateQuestionPaper = async (req, res) => {
         await assignment.save();
         // Delete old question paper if exists
         await Assignment_1.QuestionPaper.deleteOne({ assignmentId: assignment._id });
-        // Add back to queue or fallback to in-process async generation
+        // --- Generate Assignment In-Process Asynchronously ---
         const assignmentIdStr = assignment._id.toString();
-        if ((0, queue_1.isRedisConnected)()) {
-            console.log('Redis is connected. Queueing job with BullMQ for regeneration.');
-            await queue_1.assessmentQueue.add('generate-assessment', {
-                assignmentId: assignmentIdStr
-            });
-        }
-        else {
-            console.log('Redis is offline/missing. Falling back to in-process async regeneration.');
-            setImmediate(async () => {
-                try {
-                    await (0, queue_1.processAssignment)(assignmentIdStr);
-                }
-                catch (err) {
-                    console.error('Fallback in-process regeneration failed:', err);
-                }
-            });
-        }
+        setImmediate(async () => {
+            try {
+                await (0, generator_1.generateAssignment)(assignmentIdStr);
+            }
+            catch (err) {
+                console.error('In-process regeneration failed:', err);
+            }
+        });
         return res.status(200).json(assignment);
     }
     catch (error) {
