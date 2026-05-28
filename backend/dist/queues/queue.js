@@ -28,6 +28,10 @@ connection.on('error', (err) => {
 // Initialize AI Service
 const aiService = new ai_service_1.AIService();
 exports.assessmentQueue = new bullmq_1.Queue('assessment-generation', { connection });
+// Catch connection errors silently to prevent Node process from crashing
+exports.assessmentQueue.on('error', (err) => {
+    console.warn('BullMQ Queue Connection Warn:', err.message);
+});
 const isRedisConnected = () => {
     return connection.status === 'ready';
 };
@@ -145,6 +149,10 @@ const initWorker = () => {
         console.log(`Processing background job ${job.id} for assignment ${assignmentId}`);
         await (0, exports.processAssignment)(assignmentId);
     }, { connection });
+    // Catch connection errors silently to prevent Node process from crashing
+    worker.on('error', (err) => {
+        console.warn('BullMQ Worker Connection Warn:', err.message);
+    });
     worker.on('active', (job) => {
         console.log(`Job ${job.id} has started processing`);
     });
