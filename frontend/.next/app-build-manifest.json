@@ -17,6 +17,12 @@
       "static/chunks/main-app.js",
       "static/css/app/dashboard/page.css",
       "static/chunks/app/dashboard/page.js"
+    ],
+    "/assessment/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/assessment/[id]/page.css",
+      "static/chunks/app/assessment/[id]/page.js"
     ]
   }
 }

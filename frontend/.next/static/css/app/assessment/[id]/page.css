@@ -1,0 +1,430 @@
+/*!****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/styles/assessment.module.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************/
+.assessment_container__ZuE1Q {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 24px;
+  background-color: var(--bg-main);
+}
+
+/* Split Columns Layout matching Figma Screen 4 */
+.assessment_splitLayout__pocai {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  grid-gap: 32px;
+  gap: 32px;
+  width: 100%;
+  max-width: 1140px;
+  align-items: start;
+}
+
+.assessment_paperWrapper__uh45_ {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Crisp White A4 Exam Sheet Preview */
+.assessment_paperSheet__f_YO3 {
+  width: 100%;
+  max-width: 800px;
+  background-color: #ffffff;
+  color: #0f172a;
+  border-radius: 4px;
+  padding: 60px 48px;
+  box-shadow: 0 4px 25px rgba(15, 23, 42, 0.08);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  position: relative;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow: hidden;
+}
+
+/* Academic Dark Banner Header matching Figma */
+.assessment_institutionBanner__Ep9N3 {
+  background-color: #1e293b; /* Dark slate blue banner */
+  color: #ffffff;
+  padding: 24px;
+  text-align: center;
+  margin: -60px -48px 12px -48px; /* bleeds to the padding edge of the paper */
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.assessment_institution__ZRQ4N {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--primary);
+  letter-spacing: 0.15em;
+}
+
+.assessment_paperTitle__DpZLl {
+  font-family: var(--font-family-heading);
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.assessment_paperMeta__Q7CHs {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #cbd5e1;
+}
+
+/* Student Info Grid (Print Style) */
+.assessment_studentInfo__K_Zjq {
+  border: 1px solid #94a3b8;
+  border-radius: 4px;
+  padding: 12px 16px;
+  background-color: #f8fafc;
+  display: grid;
+  grid-template-columns: 2fr 1fr 80px;
+  grid-gap: 16px;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.assessment_infoField__Qck4B {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.assessment_infoInput__KKc_j {
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed #64748b;
+  border-radius: 0;
+  padding: 1px 2px;
+  width: 100%;
+  color: #0f172a;
+  font-size: 12.5px;
+  font-weight: 600;
+  outline: none;
+}
+
+.assessment_infoInput__KKc_j:focus {
+  border-bottom-style: solid;
+  border-bottom-color: var(--primary);
+  box-shadow: none;
+}
+
+/* Sections & Questions */
+.assessment_section__nqyUN {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.assessment_sectionHeader__2FSM9 {
+  background-color: #f1f5f9;
+  border-left: 4px solid #1e293b;
+  padding: 8px 12px;
+  border-radius: 0;
+}
+
+.assessment_sectionTitle__DRV8u {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.assessment_sectionInstruction__N4F_M {
+  font-size: 10.5px;
+  color: #475569;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.assessment_questionList__aYCqa {
+  display: flex;
+  flex-direction: column;
+}
+
+.assessment_questionCard___UzX0 {
+  border-bottom: 1px dashed #e2e8f0;
+  padding: 16px 4px;
+  transition: background-color var(--transition-fast);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.assessment_questionCard___UzX0:last-child {
+  border-bottom: none;
+}
+
+.assessment_questionCard___UzX0:hover {
+  background-color: #f8fafc;
+}
+
+.assessment_questionTop__cH88n {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.assessment_questionBody__Agmap {
+  display: flex;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.assessment_qIndex__wLf67 {
+  font-weight: 800;
+  color: #475569;
+  font-size: 13px;
+}
+
+.assessment_qText__BOd3n {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.assessment_qMeta__Jgs2i {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.assessment_marksBadge__hvX8m {
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  background-color: #f1f5f9;
+  border-radius: 3px;
+}
+
+/* MCQ Options */
+.assessment_optionsGrid__RVHk5 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 8px;
+  gap: 8px;
+  padding-left: 20px;
+}
+
+.assessment_optionItem__K01h6 {
+  font-size: 12.5px;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+/* Inline Edit Controls */
+.assessment_editContainer__w0_Ih {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.assessment_editTextarea__5lBRX {
+  width: 100%;
+  font-family: inherit;
+  font-size: 13px;
+  color: #0f172a;
+  background-color: #f8fafc;
+  border: 1.5px solid var(--primary);
+  border-radius: 4px;
+  padding: 8px 12px;
+  resize: vertical;
+  outline: none;
+  font-weight: 500;
+}
+
+.assessment_editActions__CwVl6 {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.assessment_saveBtnInline__JwzfQ {
+  background-color: var(--primary);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 4px;
+}
+
+.assessment_saveBtnInline__JwzfQ:hover {
+  background-color: var(--primary-hover);
+}
+
+.assessment_cancelBtnInline__aQdJn {
+  background-color: transparent;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 4px;
+}
+
+.assessment_cancelBtnInline__aQdJn:hover {
+  background-color: #f1f5f9;
+}
+
+/* Right Sidebar Panel matching Figma Screen 4 */
+.assessment_sidebarPanel__arnTH {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 24px;
+}
+
+.assessment_panelTitle__tXDsg {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.assessment_panelDetails__CYq6X {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.assessment_panelRow__CYZuA {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.assessment_panelLabel__Vz7Qv {
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.assessment_panelValue__28sJT {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.assessment_actionsGroup__v6sQ2 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 16px;
+}
+
+.assessment_actionBtn__V4FLN {
+  background-color: var(--bg-input);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 12.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.assessment_actionBtn__V4FLN:hover {
+  background-color: #f1f5f9;
+  color: var(--text-primary);
+  border-color: var(--border-color-hover);
+}
+
+.assessment_actionBtnPrimary__WKTWB {
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 10px var(--primary-glow);
+}
+
+.assessment_actionBtnPrimary__WKTWB:hover {
+  background: var(--primary-hover);
+  color: #ffffff;
+}
+
+/* Difficulty Badge Styling (Modern Print Tags) */
+.assessment_diffBadge__0wn4x {
+  font-size: 8.5px;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.assessment_diffEasy__3md2O {
+  background-color: #e6f4ea;
+  color: #137333;
+}
+
+.assessment_diffModerate__qyp96 {
+  background-color: #fef7e0;
+  color: #b06000;
+}
+
+.assessment_diffHard__bvWVv {
+  background-color: #fce8e6;
+  color: #c5221f;
+}
+
+/* Edit notification badge */
+.assessment_saveSuccessBadge__SF7FM {
+  background-color: #e6f4ea;
+  border: 1px solid #137333;
+  color: #137333;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 8px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Responsive constraints */
+@media (max-width: 960px) {
+  .assessment_splitLayout__pocai {
+    grid-template-columns: 1fr;
+  }
+  .assessment_sidebarPanel__arnTH {
+    position: static;
+  }
+}
+
