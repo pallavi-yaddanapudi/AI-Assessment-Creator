@@ -1,4 +1,5 @@
 'use client';
+export const dynamic = "force-dynamic";
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -193,10 +194,10 @@ export default function GenerateProgress() {
             <div
               key={index}
               className={`${styles.logLine} ${log.type === 'completed'
-                  ? styles.logLineCompleted
-                  : log.type === 'failed'
-                    ? styles.logLineFailed
-                    : ''
+                ? styles.logLineCompleted
+                : log.type === 'failed'
+                  ? styles.logLineFailed
+                  : ''
                 }`}
             >
               <span className={styles.logTime}>[{log.time}]</span>
